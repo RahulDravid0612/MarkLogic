@@ -1,0 +1,174 @@
+<export><workspace name="Learning XPath"><query name="Insert a Doc" focus="true" active="true" content-source="as:5008637607806848323:" mode="xquery">(: 
+  insert a document.
+  Note the following:  URI, attributes, language, data model.
+:)
+xquery version "1.0-ml";
+
+xdmp:document-insert(
+  "/library.xml",
+  &lt;bookstore&gt;
+    &lt;book category="COOKING"&gt;
+      &lt;title lang="en"&gt;Everyday Italian&lt;/title&gt;
+      &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+      &lt;year&gt;2005&lt;/year&gt;
+      &lt;price&gt;30.00&lt;/price&gt;
+    &lt;/book&gt;
+    &lt;book category="CHILDREN"&gt;
+      &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
+      &lt;author&gt;J K. Rowling&lt;/author&gt;
+      &lt;year&gt;2005&lt;/year&gt;
+      &lt;price&gt;29.99&lt;/price&gt;
+    &lt;/book&gt;
+  &lt;/bookstore&gt;)
+  ,
+  "all done"
+
+</query><query name="Read a Doc" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: read a doc :)
+
+xquery version "1.0-ml";
+
+fn:doc("/library.xml")</query><query name="XPath 1" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: XPath:  return all &lt;bookstore&gt; root nodes :)
+
+xquery version "1.0-ml";
+
+/bookstore</query><query name="XPath 2" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: return &lt;title&gt; elements satisfying the specified path relationship :)
+
+xquery version "1.0-ml";
+
+/bookstore/book/title</query><query name="XPath 3" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: return the string value of &lt;title&gt; elements satisfying the specified path relationship :)
+
+xquery version "1.0-ml";
+
+/bookstore/book/title/string()</query><query name="Namespaces" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: 
+  insert a document.
+  Note the namespace defined on the root node.
+  Run the update, and then try the XPath queries again.
+:)
+xquery version "1.0-ml";
+
+xdmp:document-insert(
+  "/library.xml",
+  &lt;bookstore xmlns="http://www.marklogic.com/bookstore"&gt;
+    &lt;book category="COOKING"&gt;
+      &lt;title lang="en"&gt;Everyday Italian&lt;/title&gt;
+      &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+      &lt;year&gt;2005&lt;/year&gt;
+      &lt;price&gt;30.00&lt;/price&gt;
+    &lt;/book&gt;
+    &lt;book category="CHILDREN"&gt;
+      &lt;title lang="en"&gt;Harry Potter&lt;/title&gt;
+      &lt;author&gt;J K. Rowling&lt;/author&gt;
+      &lt;year&gt;2005&lt;/year&gt;
+      &lt;price&gt;29.99&lt;/price&gt;
+    &lt;/book&gt;
+  &lt;/bookstore&gt;)
+</query><query name="Why Namespaces - Without" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">xquery version "1.0-ml";
+
+xdmp:document-insert(
+  "/book.xml",
+  &lt;media&gt;
+    &lt;title&gt;The Hobbit&lt;/title&gt;
+    &lt;author&gt;JRR Tolkien&lt;/author&gt;
+    &lt;year&gt;1948&lt;/year&gt;
+    &lt;price&gt;15.00&lt;/price&gt;
+  &lt;/media&gt;),
+  
+xdmp:document-insert(
+  "/movie.xml",
+  &lt;media&gt;
+    &lt;title&gt;The Hobbit&lt;/title&gt;
+    &lt;director&gt;Peter Jackson&lt;/director&gt;
+    &lt;year&gt;2012&lt;/year&gt;
+    &lt;price&gt;15.00&lt;/price&gt;
+    &lt;description&gt;Much of The Hobbit, starring &lt;person&gt;Martin Freeman&lt;/person&gt; was filmed either in &lt;country&gt;New Zealand&lt;/country&gt; or &lt;state&gt;California&lt;/state&gt;&lt;/description&gt;
+  &lt;/media&gt;),
+  
+xdmp:document-insert(
+  "/people.xml",
+  &lt;media&gt;
+    &lt;title&gt;Sir&lt;/title&gt;
+    &lt;name&gt;Elton John&lt;/name&gt;
+    &lt;year&gt;2016&lt;/year&gt;
+    &lt;price&gt;9.99&lt;/price&gt;
+  &lt;/media&gt;)</query><query name="XPath Without Namespaces" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: bring back all titles :)
+
+xquery version "1.0-ml";
+
+/media/title</query><query name="Why Namespaces - With" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">xquery version "1.0-ml";
+
+xdmp:document-insert(
+  "/book.xml",
+  &lt;media xmlns="books"&gt;
+    &lt;title&gt;The Hobbit&lt;/title&gt;
+    &lt;author&gt;JRR Tolkien&lt;/author&gt;
+    &lt;year&gt;1948&lt;/year&gt;
+    &lt;price&gt;15.00&lt;/price&gt;
+  &lt;/media&gt;),
+  
+xdmp:document-insert(
+  "/movie.xml",
+  &lt;media xmlns="movies"&gt;
+    &lt;title&gt;The Hobbit&lt;/title&gt;
+    &lt;director&gt;Peter Jackson&lt;/director&gt;
+    &lt;year&gt;2012&lt;/year&gt;
+    &lt;price&gt;15.00&lt;/price&gt;
+    &lt;description&gt;Much of The Hobbit, starring &lt;person&gt;Martin Freeman&lt;/person&gt; was filmed either in &lt;country&gt;New Zealand&lt;/country&gt; or &lt;state&gt;California&lt;/state&gt;&lt;/description&gt;
+  &lt;/media&gt;),
+  
+xdmp:document-insert(
+  "/people.xml",
+  &lt;media xmlns="people"&gt;
+    &lt;title&gt;Sir&lt;/title&gt;
+    &lt;name&gt;Elton John&lt;/name&gt;
+    &lt;year&gt;2016&lt;/year&gt;
+    &lt;price&gt;9.99&lt;/price&gt;
+  &lt;/media&gt;)</query><query name="XPath with Namespaces" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">xquery version "1.0-ml";
+
+declare namespace bk = "books";
+declare namespace mv = "movies";
+
+/bk:media/bk:title
+</query><query name="Predicate 1" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: show me the title of all books that cost less than $30 :)
+
+xquery version "1.0-ml";
+
+declare namespace bks="http://www.marklogic.com/bookstore";
+
+/bks:bookstore/bks:book[bks:price lt 30]/bks:title/string()
+</query><query name="Predicate 2" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: show the author of the first book that came out in 2005 :)
+
+xquery version "1.0-ml";
+
+declare namespace bks="http://www.marklogic.com/bookstore";
+
+/bks:bookstore/bks:book[bks:year eq 2005][1]/bks:author/text()
+</query><query name="Axes" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: show me the title of all books that cost less than $30 :)
+
+xquery version "1.0-ml";
+
+declare namespace bks="http://www.marklogic.com/bookstore";
+
+//bks:title[following-sibling::bks:price &lt; 30]/text()
+</query><query name="Attributes 1" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: show me all the categories of books :)
+
+xquery version "1.0-ml";
+
+declare namespace bks="http://www.marklogic.com/bookstore";
+
+/bks:bookstore/bks:book/@category
+</query><query name="Attributes 2" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">(: show me the title of all childrens books :)
+
+xquery version "1.0-ml";
+
+declare namespace bks="http://www.marklogic.com/bookstore";
+
+/bks:bookstore/bks:book[@category="CHILDREN"]/bks:title/text()
+</query><query name="Text" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">xquery version "1.0-ml";
+
+declare namespace mv = "movies";
+
+//mv:description/text()</query><query name="String" focus="false" active="true" content-source="as:5008637607806848323:" mode="xquery">xquery version "1.0-ml";
+
+declare namespace mv = "movies";
+
+//mv:description/string()</query></workspace></export>

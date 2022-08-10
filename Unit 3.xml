@@ -1,0 +1,73 @@
+<export><workspace name="Unit 3"><query name="Query 1" focus="false" listorder="1" taborder="1" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">(: forest :)
+xquery version "1.0-ml";
+import module namespace admin = "http://marklogic.com/xdmp/admin" at "/MarkLogic/admin.xqy";
+let $config := admin:get-configuration()
+let $config := admin:forest-create(
+  $config, 
+  "world-leaders-01",
+  xdmp:host(), 
+  ())
+return admin:save-configuration($config);
+
+(: database :)
+xquery version "1.0-ml";
+import module namespace admin = "http://marklogic.com/xdmp/admin" at "/MarkLogic/admin.xqy";
+let $config := admin:get-configuration()
+let $config := admin:database-create(
+  $config,
+  "world-leaders",
+  xdmp:database("Security"),
+  xdmp:database("Schemas"))
+return admin:save-configuration($config);
+
+(: attach forest to database :)
+xquery version "1.0-ml";
+import module namespace admin = "http://marklogic.com/xdmp/admin" at "/MarkLogic/admin.xqy";
+let $config := admin:get-configuration()
+let $config := admin:database-attach-forest(
+  $config,
+  xdmp:database("world-leaders"), 
+  xdmp:forest("world-leaders-01"))
+return admin:save-configuration($config);
+
+(: application server :)
+xquery version "1.0-ml";
+import module namespace admin = "http://marklogic.com/xdmp/admin" at "/MarkLogic/admin.xqy";
+let $config := admin:get-configuration()
+let $groupid := admin:group-get-id($config, "Default")
+let $server := admin:http-server-create(
+  $config, 
+  $groupid, 
+  "8030-world-leaders", 
+  "C:\mls-projects\world-leaders",
+  8030,
+  0,
+  admin:database-get-id($config, "world-leaders"))
+return admin:save-configuration($server);
+
+(: load documents :)
+xdmp:eval('for $d in xdmp:filesystem-directory("C:\mls-developer\unit02\world-leaders-source")//dir:entry
+return xdmp:document-load($d//dir:pathname, 
+  &lt;options xmlns="xdmp:document-load"&gt;
+    &lt;uri&gt;{fn:string($d//dir:filename)}&lt;/uri&gt;
+  &lt;/options&gt;)',  (),
+		  &lt;options xmlns="xdmp:eval"&gt;
+		    &lt;database&gt;{xdmp:database("world-leaders")}&lt;/database&gt;
+		  &lt;/options&gt;)
+
+
+</query><query name="Query 2" focus="false" listorder="2" taborder="2" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+fn:doc("United_Kingdom_David_Cameron.xml")</query><query name="Query 3" focus="false" listorder="3" taborder="3" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace wl = "http://marklogic.com/mlu/world-leaders";
+fn:doc("United_Kingdom_David_Cameron.xml")/wl:leader/wl:name/wl:firstname/text()</query><query name="Query 4" focus="false" listorder="4" taborder="4" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+fn:doc("United_Kingdom_David_Cameron.xml")/leader/name/firstname/text()</query><query name="Query 5" focus="false" listorder="5" taborder="5" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace wl = "http://marklogic.com/mlu/world-leaders";
+/wl:leader/wl:name/wl:firstname/text()</query><query name="Query 6" focus="false" listorder="6" taborder="6" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace wl = "http://marklogic.com/mlu/world-leaders";
+/wl:leader[wl:gender eq "female"]/wl:name</query><query name="Query 7" focus="false" listorder="7" taborder="7" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace wl = "http://marklogic.com/mlu/world-leaders";
+/wl:leader[wl:dob &lt; "1950-01-01"]/wl:name</query><query name="Query 8" focus="true" listorder="8" taborder="8" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace wl = "http://marklogic.com/mlu/world-leaders";
+/wl:leader[wl:dob &lt; "1950-01-01"][wl:gender eq "female"]/wl:name</query><query name="Query 9" focus="false" listorder="9" taborder="9" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace wl = "http://marklogic.com/mlu/world-leaders";
+&lt;td&gt;{fn:string(/wl:leader[wl:country eq "Argentina"]/wl:positions/wl:position[1]/@hos)}&lt;/td&gt;</query><query name="Query 10" focus="false" listorder="10" taborder="10" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";&#13;</query></workspace></export>
