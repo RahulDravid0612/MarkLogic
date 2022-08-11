@@ -1,0 +1,190 @@
+<export><workspace name="Learning FLWOR"><query name="for ex1" focus="false" listorder="1" taborder="1" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: iterate over each item in a sequence and process each item in the return :)
+
+xquery version "1.0-ml";
+
+for $i in 1 to 5
+return 
+  &lt;value&gt;{$i}&lt;/value&gt;</query><query name="for ex2" focus="false" listorder="2" taborder="2" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: iterate over each item in a sequence and process each item in the return :)
+
+xquery version "1.0-ml";
+
+&lt;output&gt;
+{
+for $i in 1 to 5
+return 
+  &lt;value&gt;{$i}&lt;/value&gt;
+}
+&lt;/output&gt;</query><query name="for ex3" focus="false" listorder="3" taborder="3" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: iterate over each item in a sequence and process each item in the return :)
+
+xquery version "1.0-ml";
+
+&lt;output&gt;
+{
+for $i in 1 to 5
+return 
+  &lt;value&gt;{$i div 2}&lt;/value&gt;
+}
+&lt;/output&gt;</query><query name="for ex4" focus="false" listorder="4" taborder="4" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: iterate over a sequence returned from an XPath expression :)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+for $book in /bks:bookstore/bks:book
+return
+  $book</query><query name="for ex5" focus="false" listorder="5" taborder="5" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: iterate over a sequence returned from an XPath expression constrained by a predicate :)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+for $book in /bks:bookstore/bks:book[bks:price lt 30]
+return
+  $book</query><query name="let ex1" focus="false" listorder="6" taborder="6" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: access data from each item in the sequence using let to bind information to a variable :)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+for $book in /bks:bookstore/bks:book
+let $title := $book/bks:title/string()
+let $author := $book/bks:author/string()
+return
+  &lt;summary&gt;{($title, "by", $author)}&lt;/summary&gt;</query><query name="Create a New Document" focus="false" listorder="7" taborder="7" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: create a new document to show an example of nested FLWOR expressions performing a join :)
+
+xquery version "1.0-ml";
+
+xdmp:document-insert(
+  "/people/giada.xml",
+  &lt;people xmlns="people"&gt;
+    &lt;name&gt;Giada De Laurentiis&lt;/name&gt;
+    &lt;about&gt;Celebrity chef, cookbook author, and TV personality.&lt;/about&gt;
+    &lt;birthdate&gt;1970-08-22&lt;/birthdate&gt;
+  &lt;/people&gt;)</query><query name="let ex2" focus="false" listorder="8" taborder="8" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: 
+  perform a join using nested FLWOR to find people documents about a given author.
+  Note:  
+    There are more efficient and scalable ways to do this join (for example by modeling the relationship in a triple).
+    But this is a good example of nesting FLWOR expressions.  
+:)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+declare namespace p = "people";
+
+for $book in /bks:bookstore/bks:book
+let $author := $book/bks:author/string()
+return
+  for $person in /p:people[p:name = $author]
+  let $name := $person/p:name/string()
+  let $about := $person/p:about/string()
+  let $birthdate := $person/p:birthdate/string()
+  return
+    &lt;author-summary&gt;
+      &lt;author-name&gt;{$author}&lt;/author-name&gt;
+      &lt;person-name&gt;{$name}&lt;/person-name&gt;
+      &lt;about&gt;{$about}&lt;/about&gt;
+      &lt;birthdate&gt;{$birthdate}&lt;/birthdate&gt;
+    &lt;/author-summary&gt;
+</query><query name="where ex1" focus="false" listorder="9" taborder="9" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: use where to constrain the sequence that gets returned :)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+for $book in /bks:bookstore/bks:book
+let $title := $book/bks:title/string()
+let $author := $book/bks:author/string()
+let $year := $book/bks:year/string()
+where $year = "2005"
+return
+  &lt;summary&gt;{($title, "by", $author)}&lt;/summary&gt;</query><query name="where ex2" focus="false" listorder="10" taborder="10" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: 
+  use where to constrain the sequence based on multiple conditions.  
+  note the error because are comparing string data to double.  
+  Its best to cast to the appropriate type before comparing (see next example).
+:)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+for $book in /bks:bookstore/bks:book
+let $title := $book/bks:title/string()
+let $author := $book/bks:author/string()
+let $year := $book/bks:year/string()
+let $price := $book/bks:price/string()
+where $year = "2005" and $price lt 30.00
+return
+  &lt;summary&gt;{($title, "by", $author)}&lt;/summary&gt;</query><query name="where ex3" focus="false" listorder="11" taborder="11" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: this example works because we cast the price to a double :)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+for $book in /bks:bookstore/bks:book
+let $title := $book/bks:title/string()
+let $author := $book/bks:author/string()
+let $year := $book/bks:year/string()
+let $price := xs:double($book/bks:price/string())
+where $year = "2005" and $price lt xs:double(30.00)
+return
+  &lt;summary&gt;{($title, "by", $author)}&lt;/summary&gt;</query><query name="order by ex1" focus="false" listorder="12" taborder="12" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: using order by to bring back the sequence in a meaninful order :)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+for $book in /bks:bookstore/bks:book
+let $title := $book/bks:title/string()
+let $author := $book/bks:author/string()
+let $year := $book/bks:year/string()
+let $price := xs:double($book/bks:price/string())
+where $year = "2005"
+order by $price
+return
+  &lt;summary&gt;{($title, "by", $author)}&lt;/summary&gt;</query><query name="order by ex2" focus="false" listorder="13" taborder="13" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: order by descending :)
+
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+for $book in /bks:bookstore/bks:book
+let $title := $book/bks:title/string()
+let $author := $book/bks:author/string()
+let $year := $book/bks:year/string()
+let $price := xs:double($book/bks:price/string())
+where $year = "2005"
+order by $price descending
+return
+  &lt;summary&gt;{($title, "by", $author)}&lt;/summary&gt;</query><query name="scope" focus="true" listorder="14" taborder="14" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="">(: 
+  A note on variable scope.
+  Variables in a FLWOR expression are scoped only to the FLWOR expression.
+  Local variables declared in the prolog are scoped to the main module.
+:)
+
+(: start of prolog :)
+xquery version "1.0-ml";
+
+declare namespace bks = "http://www.marklogic.com/bookstore";
+
+declare variable $scope-example := "2005";
+(: end of prolog :)
+
+(: start of query body :)
+(
+"remember an XQuery module returns a sequence -- this text is the first item, and then the results of the FLWOR",
+
+for $book in /bks:bookstore/bks:book
+let $title := $book/bks:title/string()
+let $author := $book/bks:author/string()
+let $year := $book/bks:year/string()
+let $price := xs:double($book/bks:price/string())
+where $year = $scope-example (: we can do this because my local variable is scoped to the module :)
+order by $price descending
+return
+  &lt;summary&gt;{($title, "by", $author)}&lt;/summary&gt;
+,
+"and now another item, but I cant reference a variable from the FLWOR expression outside of the FLWOR, it will fail like this",
+$book
+)
+(: end of query body :)</query></workspace></export>

@@ -1,0 +1,23 @@
+<export><workspace name="Unit 5"><query name="Query 1" focus="false" listorder="1" taborder="1" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">
+
+if(//wcresult/winner/text() = "Brazil")
+then "Brazil won at least one World Cup tournament." 
+else "Brazil didn't win any World Cup tournaments."</query><query name="Query 2" focus="false" listorder="2" taborder="2" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+if(//wcresult/winner/text() = "Brazil")
+then "Brazil won at least one World Cup tournament."
+else ( )</query><query name="Query 3" focus="false" listorder="3" taborder="3" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+let $temperature := 45
+return if ($temperature &lt; 50) 
+ then "It's cold outside"
+ else ()</query><query name="Query 4" focus="false" listorder="4" taborder="4" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+let $temperature := 90
+return if ($temperature &lt; 50) 
+ then "It's cold outside"
+ else ()</query><query name="Query 5" focus="false" listorder="5" taborder="5" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+let $temperature := 70
+return if ($temperature &lt; 50) 
+ then "It's cold outside" 
+ else if ($temperature &lt; 85)
+ then "It's nice outside" 
+ else "It's hot outside"</query><query name="Query 6" focus="true" listorder="6" taborder="6" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+fn:substring("94070-2722", 1, 5)</query></workspace></export>

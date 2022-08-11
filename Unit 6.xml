@@ -1,0 +1,25 @@
+<export><workspace name="Unit 6"><query name="Query 1" focus="false" listorder="1" taborder="1" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">fn:tokenize("On Wednesdays I go to the gym.", " ")
+
+</query><query name="Query 2" focus="false" listorder="2" taborder="2" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+fn:substring("94070-2722", 1, 5)</query><query name="Query 3" focus="false" listorder="3" taborder="3" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+fn:string-join($words, " ")</query><query name="Query 4" focus="false" listorder="4" taborder="4" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+
+fn:count(("Haitao", "Scott", "Dipti", "Alan", "Tamas", "Jason", "Ashutosh"))
+
+xs:integer(fn:days-from-duration(fn:current-date()-xs:date("2000-10-10")) div 365.25)</query><query name="Query 5" focus="false" listorder="5" taborder="5" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+let $xml :=
+document{
+&lt;book&gt;
+&lt;title&gt;moby dic&lt;/title&gt;
+&lt;putdate&gt;1998-08-05&lt;/putdate&gt;
+&lt;/book&gt;
+}
+
+let $today := fn:current-date()
+let $putdate := xs:date($xml/book/putdate/text())
+return 
+fn:round(fn:days-from-duration($today - $putdate) div 365.25)</query><query name="Query 6" focus="true" listorder="6" taborder="6" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+let $today := fn:current-date()
+let $putdate := xs:date("1998-05-02")
+return 
+fn:round(fn:days-from-duration($today - $putdate) div 365.25)</query></workspace></export>

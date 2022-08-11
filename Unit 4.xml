@@ -1,0 +1,35 @@
+<export><workspace name="Unit 4"><query name="Query 1" focus="true" listorder="1" taborder="1" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">
+
+for $i in (1, 2, 3, 4, 5, 6, 7, 8)
+let $squared := $i * $i 
+where $squared &gt;= 25 
+order by $i ascending 
+return $i</query><query name="Query 2" focus="false" listorder="2" taborder="2" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+for $i in ("joe", "chris", "mike")
+return $i</query><query name="Query 3" focus="false" listorder="3" taborder="3" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+for $i in 4 to 6
+return $i div 2</query><query name="Query 4" focus="false" listorder="4" taborder="4" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+for $i in (2, 3, 5, 7)
+return $i * $i</query><query name="Query 5" focus="false" listorder="5" taborder="5" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+&lt;wcresults&gt;
+&lt;wcresult id="18"&gt;
+ &lt;year&gt;2006&lt;/year&gt;
+ &lt;location&gt;Germany&lt;/location&gt;
+ &lt;region&gt;Europe&lt;/region&gt;
+ &lt;winner&gt;Italy&lt;/winner&gt;
+ &lt;runnerup&gt;France&lt;/runnerup&gt;
+ &lt;third&gt;Germany&lt;/third&gt;
+ &lt;fourth&gt;Portugal&lt;/fourth&gt;
+&lt;/wcresult&gt;
+&lt;wcresult id="19"&gt;
+ &lt;year&gt;2010&lt;/year&gt;
+ &lt;location&gt;South Africa&lt;/location&gt;
+ &lt;region&gt;Africa&lt;/region&gt;
+ &lt;winner&gt;Spain&lt;/winner&gt;
+ &lt;runnerup&gt;Netherlands&lt;/runnerup&gt;
+ &lt;third&gt;Germany&lt;/third&gt;
+ &lt;fourth&gt;Uruguay&lt;/fourth&gt;
+&lt;/wcresult&gt;
+&lt;/wcresults&gt;</query><query name="Query 6" focus="false" listorder="6" taborder="6" active="true" database="1313940438625556854" server="6166986830366657121" database-name="Documents" server-name="App-Services" mode="xquery" optimize="1">xquery version "1.0-ml";
+for $i in /wcresults/wcresult/winner/text()
+return &lt;h1&gt;{$i}&lt;/h1&gt;</query></workspace></export>
