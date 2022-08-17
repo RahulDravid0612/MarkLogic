@@ -1,0 +1,147 @@
+<export><workspace name="Workspace 1"><query name="Query 1" focus="true" listorder="1" taborder="1" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xdmp:document-insert("song1.xml",
+ &lt;top-song&gt;
+&lt;title&gt;Money for Nothing&lt;/title&gt;
+&lt;artist&gt;Dire Straits&lt;/artist&gt;
+&lt;weeks&gt;
+ &lt;week&gt;1985-09-21&lt;/week&gt;
+ &lt;week&gt;1985-09-28&lt;/week&gt;
+ &lt;week&gt;1985-10-05&lt;/week&gt;
+&lt;/weeks&gt;
+&lt;album&gt;Brothers in Arms&lt;/album&gt;
+ &lt;/top-song&gt;)
+ 
+ xdmp:document-delete("song1.xml")</query><query name="Query 2" focus="false" listorder="2" taborder="2" active="true" database="3433922724186834474" server="6967884678836380649" database-name="world-leaders" server-name="8030-world-leaders" mode="xquery" optimize="1">xquery version "1.0-ml";
+xdmp:document-load("C:\mls-developer\unit10\top-songs-source\songs\Coldplay+Viva-la-Vida.xml")</query><query name="Query 3" focus="false" listorder="3" taborder="3" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+xdmp:document-load("C:\mls-developer\unit10\top-songs-source\songs\The-Doors+Light-My-Fire.xml",
+ &lt;options xmlns="xdmp:document-load"&gt;
+&lt;uri&gt;/songs/The-Doors+Light-My-Fire.xml&lt;/uri&gt;
+&lt;permissions&gt;{xdmp:default-permissions()}&lt;/permissions&gt;
+&lt;collections&gt;
+ &lt;collection&gt;all&lt;/collection&gt;
+ &lt;collection&gt;rock&lt;/collection&gt;
+&lt;/collections&gt;
+&lt;format&gt;xml&lt;/format&gt;
+ &lt;/options&gt;)</query><query name="Query 4" focus="false" listorder="4" taborder="4" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+xdmp:document-load("C:\mls-developer\unit10\overtheyears.html",
+ &lt;options xmlns="xdmp:document-load"&gt;
+ &lt;format&gt;xml&lt;/format&gt;
+ &lt;repair&gt;full&lt;/repair&gt;
+ &lt;/options&gt;)</query><query name="Query 5" focus="false" listorder="5" taborder="5" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+xdmp:filesystem-directory("C:\mls-developer\unit10\top-songs-source\songs")</query><query name="Query 6" focus="false" listorder="6" taborder="6" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace dir="http://marklogic.com/xdmp/directory";
+for $d in xdmp:filesystem-directory("C:\mls-developer\unit10\top-songs-source\songs")//dir:entry
+return $d</query><query name="Query 7" focus="false" listorder="7" taborder="7" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+import module namespace info = "http://marklogic.com/appservices/infostudio" at "/MarkLogic/appservices/infostudio/info.xqy";
+let $path := "C:\mls-developer\unit10\top-songs-source\songs"
+let $options := 
+ &lt;options xmlns="http://marklogic.com/appservices/infostudio"&gt;
+ &lt;uri&gt;
+ &lt;literal&gt;/songs/&lt;/literal&gt;
+ &lt;filename/&gt;
+ &lt;literal&gt;.&lt;/literal&gt;
+ &lt;ext/&gt;
+ &lt;/uri&gt;
+ &lt;max-docs-per-transaction&gt;100&lt;/max-docs-per-transaction&gt;
+ &lt;error-handling&gt;continue-with-warning&lt;/error-handling&gt;
+ &lt;overwrite&gt;overwrite&lt;/overwrite&gt;
+ &lt;/options&gt;
+let $database := "top-songs"
+return info:load($path, (), $options, $database)</query><query name="Query 8" focus="false" listorder="8" taborder="8" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace dir="http://marklogic.com/xdmp/directory";
+let $jason := xdmp:document-get("C:\mls-developer\unit10\favs\jasonfavs.xml")//song/text()
+let $danny := xdmp:document-get("C:\mls-developer\unit10\favs\dannyfavs.xml")//song/text()
+for $d in xdmp:filesystem-directory("C:\mls-developer\unit10\top-songs-source\songs")//dir:entry
+return xdmp:document-load($d//dir:pathname,
+ &lt;options xmlns="xdmp:document-load"&gt;
+&lt;uri&gt;/songs/{fn:string($d//dir:filename)}&lt;/uri&gt;
+&lt;collections&gt;
+ {
+ if (fn:string($d//dir:filename) = $jason)
+ then &lt;collection&gt;jason&lt;/collection&gt;
+ else ()
+ }
+ {
+ if (fn:string($d//dir:filename) = $danny) 
+ then &lt;collection&gt;danny&lt;/collection&gt;
+ else ()
+ }
+&lt;/collections&gt;
+ &lt;/options&gt;)
+ 
+ 
+ fn:collection("jason")
+ 
+ fn:count(fn:collection("danny"))</query><query name="Query 9" focus="false" listorder="9" taborder="9" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">
+xquery version "1.0-ml"; 
+import module namespace info = "http://marklogic.com/appservices/infostudio" at "/MarkLogic/appservices/infostudio/info.xqy";
+let $path := "C:\mls-developer\unit10\top-songs-source\images"
+let $options := 
+ &lt;options xmlns="http://marklogic.com/appservices/infostudio"&gt;
+ &lt;uri&gt;
+ &lt;literal&gt;/images/&lt;/literal&gt;
+ &lt;filename/&gt;
+ &lt;literal&gt;.&lt;/literal&gt;
+ &lt;ext/&gt;
+ &lt;/uri&gt;
+ &lt;/options&gt;
+let $database := "top-songs"
+return info:load($path, (), $options, $database)</query><query name="Query 10" focus="false" listorder="10" taborder="10" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+for $i in xdmp:directory("/images/")
+return fn:base-uri($i)</query><query name="Query 11" focus="false" listorder="11" taborder="11" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+cts:search(fn:doc(),"india")
+cts:contains(fn:doc(), "india")</query><query name="Query 12" focus="false" listorder="12" taborder="12" active="true" database="1618576857330047247" server="11780046524933778865" database-name="top-songs" server-name="8040-top-songs" mode="xquery" optimize="1">xquery version "1.0-ml";
+declare namespace ts="http://marklogic.com/MLU/top-songs";
+for $song in cts:search(fn:doc(), "night")[1 to 10]
+return $song/ts:top-song/ts:title/text()
+
+declare namespace ts="http://marklogic.com/MLU/top-songs";
+for $songtitle in cts:search(fn:doc()/ts:top-song/ts:title, "night")[1 to 10]
+return &lt;div&gt;{$songtitle/text()}&lt;/div&gt;
+
+declare namespace ts="http://marklogic.com/MLU/top-songs";
+for $song in (/ts:top-song[fn:contains(., "night")])[1 to 10]
+return $song
+
+for $song in cts:search(fn:doc(), "night")[1 to 10]
+return $song
+
+declare namespace ts="http://marklogic.com/MLU/top-songs";
+import module namespace search = "http://marklogic.com/appservices/search" at "/MarkLogic/appservices/search/search.xqy";
+search:search("night")
+
+import module namespace search = "http://marklogic.com/appservices/search" at 
+"/MarkLogic/appservices/search/search.xqy";
+let $options := 
+ &lt;options xmlns="http://marklogic.com/appservices/search"&gt;
+&lt;transform-results apply="raw"/&gt;
+ &lt;/options&gt;
+return search:search("night", $options)
+
+declare namespace ts="http://marklogic.com/MLU/top-songs";
+import module namespace search = "http://marklogic.com/appservices/search" at 
+"/MarkLogic/appservices/search/search.xqy";
+let $options := 
+ &lt;options xmlns="http://marklogic.com/appservices/search"&gt;
+&lt;transform-results apply="raw"/&gt;
+ &lt;/options&gt;
+for $song in search:search("night", $options)/search:result 
+return &lt;div&gt;{$song//ts:title/text()}&lt;/div&gt;
+
+declare namespace ts="http://marklogic.com/MLU/top-songs";
+import module namespace search = "http://marklogic.com/appservices/search" at 
+"/MarkLogic/appservices/search/search.xqy";
+for $song in search:search("night")/search:result 
+let $title := fn:doc($song/@uri)//ts:title/text() 
+return &lt;div&gt;{$title}&lt;/div&gt;
+
+declare namespace ts="http://marklogic.com/MLU/top-songs";
+fn:count(cts:search(fn:doc(),
+cts:element-word-query(xs:QName("ts:title"), "love"))), xdmp:elapsed-time()  
+
+xdmp:estimate(cts:search(fn:doc(), "love")), 
+xdmp:estimate(cts:search(fn:doc(), "Love")), 
+xdmp:estimate(cts:search(fn:doc(), "LOVE"))
+
+fn:count(cts:search(fn:doc(), "love")), 
+fn:count(cts:search(fn:doc(), "Love")), 
+fn:count(cts:search(fn:doc(), "LOVE"))</query></workspace></export>
